@@ -1,0 +1,30 @@
+id: some project
+institution: Tel Aviv University
+lab: PBLab
+experimenter: some clever person
+protocol_id: 192-24
+description: the next Nobel prize
+conditions:
+- base
+- post
+- recovery
+genotype:
+- WT
+- Thy1-GCaMP6s
+- Thy1-GCaMP8s
+virus:
+- None
+- AAV2.phpEb-GCaMP8s
+- AAV2.somGCaMP8m
+anesthesia:
+- None
+- Isofluorane
+- a-chlor
+labeling:
+- None
+- FITC*2MDa
+- TxRed*70KDa
+pharmacology:
+- None
+- Esmolol
+- Atropine
