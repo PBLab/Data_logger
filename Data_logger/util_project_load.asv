@@ -50,6 +50,7 @@ end
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
 if isfile(path_to_subject_table)
     subjects_table = readtable(path_to_subject_table);
+    subjects_in_table = unique(subjects_table.id);
     populate_session_subject_dropdown(app,subjects_table.id);
 end
 
@@ -57,10 +58,10 @@ end
 %acquisition identifier, increment by one and store in app.ACQ_ID
 
 %%
-path_to_session_table = fullfile(app.PROJECT_ROOT_DIR,'sessions.csv');
-if isfile(path_to_session_table)
-    session_table = readtable(path_to_subject_table);
-    last_acq_id = session_table.acq_id(end);
-    app.ACQ_ID = last_acq_id+1;
+path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
+if isfile(path_to_subject_table)
+    subjects_table = readtable(path_to_subject_table);
+    subjects_in_table = unique(subjects_table.id);
+    populate_session_subject_dropdown(app,subjects_table.id);
 end
 status = 1;
