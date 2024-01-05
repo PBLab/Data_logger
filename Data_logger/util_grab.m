@@ -23,18 +23,14 @@ app.PATH_TO_DATA_REL = app.PATH_TO_DATA.erase(app.PROJECT_ROOT_DIR);
 %update SI data logging fields
 %update filename and directory
 
-
-
 if  app.AcquireanalogdataCheckBox.Value
     %evalin ('base','data_logger_init_analog_acq'); 
     %set analog acquisition
 end
 
-
-
 % evalin('base','hSI.startGrab')
-session = util_log_session(app)
-util_write_metadata_to_xml(app);
+session = util_log_session(app);
+util_write_metadata_to_xml(app,session);
 
 %if we got here, increase acq_id counter by one
 app.ACQ_ID = app.ACQ_ID + 1;
