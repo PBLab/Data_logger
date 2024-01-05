@@ -6,23 +6,35 @@ if sum(app.Lamp.Color == app.lamp_off_color) == 3
 end
 
 get_session_parameters(app);
+app.BASE_FILE_NAME = util_create_filename(app);
+
 %determine type of data (this might be automated from SI
 data_type = app.DatatypeDropDown.Value;
 switch data_type
-    case {'Movie','Arbitrary Scan'}
-        app.PATH_TO_SESSION_DATA_OPHYS
+    case {'Movie'}
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('.tif'));
+    case {'Arbitrary Scan'}
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('.dat'));
     case 'Stack'
-        app.PATH_TO_SESSION_DATA_ANAT
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_ANAT,app.BASE_FILE_NAME.append('.tif'));
 end
+app.PATH_TO_DATA_REL = app.PATH_TO_DATA.erase(app.PROJECT_ROOT_DIR);
 
 %update SI data logging fields
+%update filename and directory
+
+
 
 if  app.AcquireanalogdataCheckBox.Value
-    %evalin ('base','data_logger_init_analog_acq');
+    %evalin ('base','data_logger_init_analog_acq'); 
     %set analog acquisition
 end
 
+
+
 % evalin('base','hSI.startGrab')
+session = util_log_session(app)
+util_write_metadata_to_xml(app);
 
 %if we got here, increase acq_id counter by one
 app.ACQ_ID = app.ACQ_ID + 1;

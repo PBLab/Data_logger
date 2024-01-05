@@ -42,16 +42,37 @@ function util_create_session_name(app)
             app.SESSION_ID = session_str;
             app.SessionIDTextArea.Value = app.SESSION_ID;
             
+                        
             
             %%
-            path_to_session= fullfile(app.PROJECT_ROOT_DIR,app.SUBJECT_ID,cell2mat(app.SESSION_ID));
+            session_dir_str = string(sprintf('ses-%s-%s',app.SUBJECT_ID,datestr(now,'YYYYmmDD')));
+            
+            if app.CheckBox_Condition_dir.Value
+                session_dir_str = session_dir_str.append(sprintf("%s%s",filesep,app.CONDITION));
+            end
+            
+            if app.CheckBox_Timepoint_dir.Value
+                session_dir_str = session_dir_str.append(sprintf("%sT_%02d",filesep,app.TIMEPOINT));
+            end
+
+            if app.CheckBox_FOV_dir.Value
+                session_dir_str = session_dir_str.append(sprintf("%sFOV_%02d",filesep,app.FOV));
+            end
+            
+            if app.CheckBox_Anesthesia_dir.Value
+                session_dir_str = session_dir_str.append(sprintf("%s%s",filesep,app.ANESTHESIA));
+            end
+            
+            if app.CheckBox_Pharmacology_dir.Value
+                session_dir_str = session_dir_str.append(sprintf("%s%s",filesep,app.PHARMACOL));
+            end
+            path_to_session= fullfile(app.PROJECT_ROOT_DIR,session_dir_str);
+
+            %%
             app.PATH_TO_SESSION_DATA_OPHYS = fullfile(path_to_session,'ophys');
             app.PATH_TO_SESSION_DATA_ANAT = fullfile(path_to_session,'anat');
             app.PATH_TO_SESSION_DERIVATIVES = fullfile(path_to_session,'derivates');
        
-            
-            
-            
             
             try
                 %create data structure

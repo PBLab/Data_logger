@@ -59,8 +59,9 @@ end
 %%
 path_to_session_table = fullfile(app.PROJECT_ROOT_DIR,'sessions.csv');
 if isfile(path_to_session_table)
-    session_table = readtable(path_to_subject_table);
-    last_acq_id = session_table.acq_id(end);
+    session_table = readtable(path_to_session_table);
+    last_acq_id = session_table.acquisition_id(end);
     app.ACQ_ID = last_acq_id+1;
+    app.AcquisitionIDTextArea.Value = sprintf('%05d',app.ACQ_ID);
 end
 status = 1;
