@@ -46,11 +46,17 @@ if isfield(project,'pharmacology')
     app.PharmacolDropDown.Items=project.pharmacology;
 end
 
+if isfield(project,'strain')
+    app.StrainDropDown.Items=project.strain;
+end
+
 %check if subjects table exists, load and populate fields
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
 if isfile(path_to_subject_table)
     subjects_table = readtable(path_to_subject_table);
-    populate_session_subject_dropdown(app,subjects_table.id);
+    %     populate_session_subject_dropdown(app,subjects_table.id);
+    app.SessionsubjectDropDown.Items=subjects_table.id;
+    
 end
 
 %check if session table exists, read last row and obtain current

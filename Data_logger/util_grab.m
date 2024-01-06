@@ -23,14 +23,23 @@ app.PATH_TO_DATA_REL = app.PATH_TO_DATA.erase(app.PROJECT_ROOT_DIR);
 %update SI data logging fields
 %update filename and directory
 
+grab_start_timestamp = datestr(now);
+
 if  app.AcquireanalogdataCheckBox.Value
-    %evalin ('base','data_logger_init_analog_acq'); 
+    switch app.DAQDropDown.Value
+        case 'NI'
+             %evalin ('base','data_logger_init_analog_acq_ni'); 
+        case 'VDAQ'
+             %evalin ('base','data_logger_init_analog_acq_vdaq'); 
+    end
+   
     %set analog acquisition
 end
 
 % evalin('base','hSI.startGrab')
 session = util_log_session(app);
-util_write_metadata_to_xml(app,session);
+acquisition = util_log_acquisition(app,grab_start_timestamp);
+util_write_metadata_to_xml(app,session,acquisition);
 
 %if we got here, increase acq_id counter by one
 app.ACQ_ID = app.ACQ_ID + 1;

@@ -3,8 +3,8 @@ function status = util_add_subject(app)
 
 %validate filled mandatory  fields - TO DO
 current_subject_id = app.AnimalIDTextArea.Value;
-if isempty(current_subject_id{1})
-    warndlg("Animal ID, species, sex and DOB are mandatory.")
+if isempty(current_subject_id{1}) || isnat(app.DOBDatePicker_2.Value)  || strcmp(app.SexDropDown.Value,'?')
+    uialert(app.UIFigure, "Animal ID, species, sex and DOB are mandatory.","Cannot add subject");
     return
 end
 
@@ -27,6 +27,6 @@ else
     subjects_table = [subjects_table;struct2table(subject,'AsArray',true)];
     writetable(subjects_table,path_to_subject_table)
 end
-populate_session_subject_dropdown(app,subjects_table.id);
+app.SessionsubjectDropDown.Items = subjects_table.id;
 
 status = 1;

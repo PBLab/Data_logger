@@ -1,4 +1,4 @@
-function status = util_write_metadata_to_xml(app,session)
+function status = util_write_metadata_to_xml(app,session,acq_params)
 %functions dumps an NWB-like xml file with pertinent data
 
 %% Gater info to dump into xml
@@ -12,7 +12,6 @@ project  = struct('project_name',app.PROJECT_ID,...
     'protocol_num',app.ProtocolTextArea.Value,...
     'description',app.Project_description.Value);
 
-acq_params = struct('data_type',app.DatatypeDropDown.Value); %get more data from SI
 
 %%
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');

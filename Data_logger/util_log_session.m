@@ -1,7 +1,7 @@
 function [this_session,status] = util_log_session(app)
 %UTIL_LOG_SESSION Summary of this function goes here
-%   Detailed explanation goes here
-if isempty(app.SessionDescription);app.SessionDescription={};end
+%%   Gather session data to log
+if ~numel(app.SessionDescription.Value{:});app.SessionDescription.Value={'None'};end
 this_session = struct(...
     'session_id',app.SESSION_ID,...
     'acquisition_id',app.ACQ_ID,...
@@ -19,7 +19,7 @@ this_session = struct(...
 	'comments',{'None'},...
     'path_to_data',app.PATH_TO_DATA_REL);
 
-if ~numel(this_session.description);this_session.description={'None'};end
+% if ~numel(this_session.description);this_session.description={'None'};end
 
 
 this_session_table=struct2table(this_session,'AsArray',true);
