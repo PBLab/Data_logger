@@ -5,7 +5,7 @@ if sum(app.Lamp.Color == app.lamp_off_color) == 3
     return
 end
 
-get_session_parameters(app);
+util_get_session_parameters(app);
 app.BASE_FILE_NAME = util_create_filename(app);
 
 %determine type of data (this might be automated from SI

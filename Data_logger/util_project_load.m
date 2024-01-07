@@ -3,12 +3,14 @@ function status = util_project_load(app)
 %attempt to load project.yml, if successful populate project
 %fields in gui
 %path_to_xml = fullfile(app.PROJECT_ROOT_DIR,'project.xml');
-path_to_yml = fullfile(app.PROJECT_ROOT_DIR,'project.yml');
-if isfile(path_to_yml)
-    %project = readstruct(path_to_xml);
-    project = yaml.loadFile(path_to_yml,"ConvertToArray", true);
+
+
+if util_validate_yml_in_rootdir(app)
+     path_to_yml = fullfile(app.PROJECT_ROOT_DIR,'project.yml');
+     project = yaml.loadFile(path_to_yml,"ConvertToArray", true);
 else
-    warndlg (sprintf("No project.yml file in %s",app.PROJECT_ROOT_DIR));
+    status = 0;
+    return
 end
 
 %populate Project tab
@@ -48,6 +50,10 @@ end
 
 if isfield(project,'strain')
     app.StrainDropDown.Items=project.strain;
+end
+
+if isfield(project,'stimulation')
+    app.StimDropDown.Items = project.stimulation;
 end
 
 %check if subjects table exists, load and populate fields

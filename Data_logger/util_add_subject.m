@@ -23,10 +23,11 @@ if any(ismember(subjects_in_table,current_subject_id))
     warndlg('Animal id already exists in table');
     return
 else
-    subject = get_subject(app);
+    subject = util_get_subject(app);
     subjects_table = [subjects_table;struct2table(subject,'AsArray',true)];
     writetable(subjects_table,path_to_subject_table)
 end
 app.SessionsubjectDropDown.Items = subjects_table.id;
 
 status = 1;
+
