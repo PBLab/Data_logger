@@ -12,6 +12,11 @@ genotype:
 - WT
 - Thy1-GCaMP6s
 - Thy1-GCaMP8s
+strain:
+- C57Bl/6J
+- B6
+- BALB/cJ
+- FVB
 virus:
 - None
 - AAV2.phpEb-GCaMP8s
@@ -28,3 +33,6 @@ pharmacology:
 - None
 - Esmolol
 - Atropine
+stimulation:
+- None
+- Stim[Air puff]
