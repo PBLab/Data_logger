@@ -4,9 +4,12 @@ ScanImage automatization of data structure and project logging
 This Matlab app allows to keep track of data acquired for a given project. This include description of subjects and acquisition sessions as well as creating a metadata wildcard for each piece of data acquired. The app is intended as an extension for ScanImage but can be used only for maintaining the data structure / directories.
 
 The following tables (plain text, csv) are maintained by the app:
+
 **subjects** - info about each experimental subject (species, strain, surgery / virus types, dob, etc).
+
 **sessions** - describes experiment conditions (anesthesia, stimulus, field of views, timeopoints etc) as well as a unique acquisition_id to link to acquisition parameters. A relative path to the data is stored here too making it easier to move to the entire project tree to a different location while preserving access details to data. Post-acquisition details (quality estimation and notes are also stored here).
-acquisitions - settings related to the type of acquisition perfomred (Movie/Stack/Arbitrary scan, frame rate, size, magnification etc).
+
+**acquisitions** - settings related to the type of acquisition perfomred (Movie/Stack/Arbitrary scan, frame rate, size, magnification etc).
 
 # Installation
 Simple clone repo (or just download and extract code) and add directory to Matlab path.
