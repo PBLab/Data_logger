@@ -15,6 +15,7 @@ hResource = dabs.resources.ResourceStore().filterByName('AnalogDataRecorder');
 hResource.sampleRate = sample_rate;
 hResource.fileBaseName = fname;
 hResource.fileDirectory = target_dir;
+hResource.useTrigger = 1;
 
 
 %% ensure user functions are enabled.

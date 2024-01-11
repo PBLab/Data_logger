@@ -12,31 +12,48 @@ app.BASE_FILE_NAME = util_create_filename(app);
 data_type = app.DatatypeDropDown.Value;
 switch data_type
     case {'Movie'}
-        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('.tif'));
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('_00001.tif'));
+        si_path_to_data = app.PATH_TO_SESSION_DATA_OPHYS;
     case {'Arbitrary Scan'}
-        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('.dat'));
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_OPHYS,app.BASE_FILE_NAME.append('_00001.dat'));
+        si_path_to_data =  app.PATH_TO_SESSION_DATA_OPHYS;
     case 'Stack'
-        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_ANAT,app.BASE_FILE_NAME.append('.tif'));
+        app.PATH_TO_DATA = fullfile(app.PATH_TO_SESSION_DATA_ANAT,app.BASE_FILE_NAME.append('_00001.tif'));
+        si_path_to_data = app.PATH_TO_SESSION_DATA_ANAT;
 end
 app.PATH_TO_DATA_REL = app.PATH_TO_DATA.erase(app.PROJECT_ROOT_DIR);
 
+%% SI interface
 %update SI data logging fields
 %update filename and directory
-
+cmd = sprintf("hSI.hScan2D.logFilePath='%s';",si_path_to_data);
+evalin('base',cmd);
+cmd = sprintf("hSI.hScan2D.logFileStem='%s';",app.BASE_FILE_NAME);
+evalin('base',cmd);
+cmd = ['hSI.hChannels.loggingEnable=1;hSI.hScan2D.logFileCounter=1;' ...
+    'hSI.hScan2D.logOverwriteWarn=1;'];
+evalin('base',cmd);
+%%
 grab_start_timestamp = datestr(now);
+switch app.APP_MODE
+    case 'SI-Online'
+        if  app.AcquireanalogdataCheckBox.Value
+            switch app.DAQDropDown.Value
+                case 'NI'
+                    %evalin ('base','data_logger_init_analog_acq_ni');
+                case 'VDAQ'
+                    evalin ('base','data_logger_init_analog_acq_vdaq;');
+                    evalin('base','hSI.startGrab')
+            end
 
-if  app.AcquireanalogdataCheckBox.Value
-    switch app.DAQDropDown.Value
-        case 'NI'
-             %evalin ('base','data_logger_init_analog_acq_ni'); 
-        case 'VDAQ'
-             %evalin ('base','data_logger_init_analog_acq_vdaq'); 
-    end
-   
-    %set analog acquisition
-end
+        else
+            evalin('base','hSI.startGrab')
+        end
+        cmd = 'hSI.hChannels.loggingEnable=0;';
+        evalin('base',cmd)
+end %APP_MODE
 
-% evalin('base','hSI.startGrab')
+
 session = util_log_session(app);
 acquisition = util_log_acquisition(app,grab_start_timestamp);
 util_write_metadata_to_xml(app,session,acquisition);

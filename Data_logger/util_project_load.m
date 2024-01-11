@@ -12,7 +12,8 @@ else
     status = 0;
     return
 end
-
+%Set app mode
+app.APP_MODE = project.app_mode;
 %populate Project tab
 app.PROJECT_ID = project.id;
 app.ProjectNameTextArea.Value = project.id;
