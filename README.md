@@ -14,6 +14,14 @@ The following tables (plain text, csv) are maintained by the app:
 # Installation
 Simple clone repo (or just download and extract code) and add directory to Matlab path.
 
+Simultaneous imaging and analog data recording is system / case specific and the functionality should be adapted accordingly. The user should modify the following files according to the acquisition system being used.
+
+-VDAQ: update `data_logger_init_acq_vdaq.m`.
+
+-NI: update `data_logger_init_acq_vdaq.m`.
+
+In addition, under NI-based systems, the approach makes use of user functions which are provided under /SI_user_functions. These functions should be modified to the need of each experiment and added to the Matlab path.
+
 # Creating a project
 Project settings are stored in a yaml file called ['project.yml'](project.yml). This file goes under PROJECT_ROOT_DIR/ which can be any directory of your choice. Fields in the 'project.yml' file are used to populate fields in the app tabs related to project (experimenter, project name, etc) and session (conditions, anesthetics, viruses, etc). Check the file to see supported options.
 
