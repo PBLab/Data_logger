@@ -19,3 +19,5 @@ Project settings are stored in a yaml file called ['project.yml'](project.yml). 
 
 # Dependencies
 Install [yaml tools](https://www.mathworks.com/matlabcentral/fileexchange/106765-yaml) and add to Matlab path.
+
+If running on Matlab prior to 2020b, install [xml_io_tools]((https://www.mathworks.com/matlabcentral/fileexchange/12907-xml_io_tools) and add to Matlab path.
