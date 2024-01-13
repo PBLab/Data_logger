@@ -4,6 +4,7 @@ lab: PBLab
 experimenter: some clever person
 protocol_id: 192-24
 description: the next Nobel prize
+app_mode: SI-Online
 conditions:
 - base
 - post

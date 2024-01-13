@@ -40,7 +40,7 @@ switch app.APP_MODE
         if  app.AcquireanalogdataCheckBox.Value
             switch app.DAQDropDown.Value
                 case 'NI'
-                    %evalin ('base','data_logger_init_analog_acq_ni');
+                    evalin ('base','data_logger_init_analog_acq_ni');
                 case 'VDAQ'
                     evalin ('base','data_logger_init_analog_acq_vdaq;');
                     evalin('base','hSI.startGrab')
