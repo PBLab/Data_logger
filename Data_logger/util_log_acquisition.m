@@ -11,7 +11,7 @@ this_acq = struct(...
     'Scanner',app.ScannerDropDown.Value,...
     'Objective',app.ObjectiveDropDown.Value,...
     'DAQ',app.DAQDropDown.Value,...
-    'description',app.DescriptionAcqTextArea.Value...
+    'description',{app.DescriptionAcqTextArea.Value}...
     );
 
 % if ~numel(this_acq.description);this_acq.description={'None'};end
@@ -28,8 +28,14 @@ this_acq_table=struct2table(this_acq,'AsArray',true);
 %% load file if exists and append (todo - just append w/o loading into table), create otherwise
 path_to_acq_table = fullfile(app.PROJECT_ROOT_DIR,'acquisitions.csv');
 if isfile(path_to_acq_table)
-    opts = adjust_readtable_timeoptions(path_to_acq_table,{'timestamp'},'dd-MMM-yyyy hh:mm:ss');
-    acq_table = readtable(path_to_acq_table,opts);
+    if verLessThan('matlab', '2020b')
+ 
+        acq_table = readtable(path_to_acq_table);
+        
+    else
+        opts = adjust_readtable_timeoptions(path_to_acq_table,{'timestamp'},'dd-MMM-yyyy hh:mm:ss');
+        acq_table = readtable(path_to_acq_table,opts);
+    end
     acq_ids = acq_table.acquisition_id;
     if ~ismember(acq_ids,this_acq.acquisition_id)
         acq_table = [acq_table;this_acq_table];
