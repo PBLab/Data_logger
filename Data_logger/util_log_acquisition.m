@@ -38,7 +38,11 @@ if isfile(path_to_acq_table)
     end
     acq_ids = acq_table.acquisition_id;
     if ~ismember(acq_ids,this_acq.acquisition_id)
-        acq_table = [acq_table;this_acq_table];
+        if size(acq_table,2) == size(this_acq_table,2)
+            acq_table = [acq_table;this_acq_table];
+        else
+            acq_table = append_uneven_tables(acq_table,this_acq_table);
+        end
         acq_ids = acq_table.acquisition_id;
         fprintf('\n\tUpdating acquisition table\n')
         writetable(acq_table,path_to_acq_table)

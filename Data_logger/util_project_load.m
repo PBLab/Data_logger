@@ -6,8 +6,8 @@ function status = util_project_load(app)
 
 
 if util_validate_yml_in_rootdir(app)
-     path_to_yml = fullfile(app.PROJECT_ROOT_DIR,'project.yml');
-     project = yaml.loadFile(path_to_yml,"ConvertToArray", true);
+    path_to_yml = fullfile(app.PROJECT_ROOT_DIR,'project.yml');
+    project = yaml.loadFile(path_to_yml,"ConvertToArray", true);
 else
     status = 0;
     return
@@ -60,7 +60,8 @@ end
 %check if subjects table exists, load and populate fields
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
 if isfile(path_to_subject_table)
-    subjects_table = readtable(path_to_subject_table);
+    opts = adjust_readtable_timeoptions(path_to_subject_table,{'dob','surgery_date','virus_injection_date'},'dd-MMM-uuuu hh:mm:ss');
+    subjects_table = readtable(path_to_subject_table,opts);
     %     populate_session_subject_dropdown(app,subjects_table.id);
     app.SessionsubjectDropDown.Items=subjects_table.id;
     
@@ -75,6 +76,10 @@ if isfile(path_to_session_table)
     session_table = readtable(path_to_session_table);
     last_acq_id = session_table.acquisition_id(end);
     app.ACQ_ID = last_acq_id+1;
+    app.AcquisitionIDTextArea.Value = sprintf('%05d',app.ACQ_ID);
+else
+    %set acq id to 0 as we start a new project
+    app.ACQ_ID = 0;
     app.AcquisitionIDTextArea.Value = sprintf('%05d',app.ACQ_ID);
 end
 status = 1;

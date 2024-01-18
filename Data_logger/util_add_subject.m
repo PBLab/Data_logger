@@ -10,7 +10,7 @@ end
 
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
 if isfile(path_to_subject_table)
-    opts = adjust_readtable_timeoptions(path_to_subject_table);
+    opts = adjust_readtable_timeoptions(path_to_subject_table,{'dob','surgery_date','virus_injection_date'},'dd-MMM-yyyy hh:mm:ss');
     subjects_table = readtable(path_to_subject_table,opts);
     %                 subjects_table.Properties.RowNames = "id";
     subjects_in_table = unique(subjects_table.id);

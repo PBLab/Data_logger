@@ -17,6 +17,36 @@ acq_settings = struct('pixelsPerLine', hSIcopy.hRoiManager.pixelsPerLine,...
 'axesPosition_z',hSIcopy.hMotors.axesPosition(3),...
 'samplePosition_x',hSIcopy.hMotors.samplePosition(1),...
 'samplePosition_y',hSIcopy.hMotors.samplePosition(2),...
-'samplePosition_z',hSIcopy.hMotors.samplePosition(3));
+'samplePosition_z',hSIcopy.hMotors.samplePosition(3),...
+'beam1_power',hSIcopy.hBeams.powers(1),...
+'beam2_power',NaN);
+
+%%
+if numel(hSIcopy.hBeams.powers)>1
+    acq_settings.beam2_power = hSIcopy.hBeams.powers(2);
+end
+
+%% check if stack mode is enabled and append variables accordingly
+stackManager = hSIcopy.hStackManager;
+if stackManager.enable
+    num_slices = stackManager.actualNumSlices;
+    step_size = stackManager.actualStackZStepSize;
+    z_start = stackManager.stackZStartPos;
+    z_end = stackManager.stackZEndPos;
+    frames_per_slice = stackManager.framesPerSlice;
+else
+    num_slices=nan;
+    step_size=nan;
+    z_start=nan;
+    z_end = nan;
+    frames_per_slice = nan;
+end
+
+acq_settings.num_slices = num_slices;
+acq_settings.step_size = num_slices;
+acq_settings.frames_per_slice = num_slices;
+acq_settings.z_start = num_slices;
+acq_settings.z_end = num_slices;
+
 
 assignin("caller","acq_settings",acq_settings)
