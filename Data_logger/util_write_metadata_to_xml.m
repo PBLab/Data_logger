@@ -30,7 +30,7 @@ xml_dump.acq_params = acq_params;
 [file_root,file_name] = fileparts(session.path_to_data);
 path_to_xml = fullfile(app.PROJECT_ROOT_DIR, file_root,file_name.append(".xml"));
 
-if verLessThan('matlab', '2020b')
+if isMATLABReleaseOlderThan('R2020b')
     %use legacy xml io tool from
     %(https://www.mathworks.com/matlabcentral/fileexchange/12907-xml_io_tools)
     xml_write(path_to_xml,xml_dump);
