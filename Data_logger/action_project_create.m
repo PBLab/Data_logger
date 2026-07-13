@@ -19,7 +19,7 @@ try
     description = app.Project_description.Value{1};
     project = struct('id',id,'institution',institution,'lab',lab, ...
         'experimenter',experimenter,'protocol_id',protocol_id,...
-        'description',description);
+        'description',description,'app_mode',app.APP_MODE);
     path_to_yml = fullfile(app.PROJECT_ROOT_DIR,'project.yml');
     yaml.dumpFile(path_to_yml,project,'block')
     status = 1;
