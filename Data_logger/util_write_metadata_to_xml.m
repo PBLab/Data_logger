@@ -16,6 +16,7 @@ project  = struct('project_name',app.PROJECT_ID,...
 %%
 path_to_subject_table = fullfile(app.PROJECT_ROOT_DIR,'subjects.csv');
 opts = adjust_readtable_timeoptions(path_to_subject_table,{'dob','surgery_date','surgery_date'},'dd-MMM-yyyy');
+opts = setvartype(opts,'id','char');
 subjects_table = readtable(path_to_subject_table,opts);
 row = ismember(subjects_table.id,session.subject_id);
 subject  = table2struct( subjects_table(row,:));
